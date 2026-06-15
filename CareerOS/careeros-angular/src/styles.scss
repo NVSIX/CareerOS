@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Manrope:wght@400;500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Base
+body {
+  @apply bg-surface text-on-surface font-body;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ===== NEUMORPHIC ELEVATION SYSTEM =====
+
+.nm-raised {
+  background: #f7f9fd;
+  box-shadow:
+     8px  8px 16px rgba(209, 201, 183, 0.40),
+    -8px -8px 16px rgba(255, 255, 255, 1.00);
+}
+
+.nm-pressed {
+  background: #f7f9fd;
+  box-shadow:
+    inset  6px  6px 12px rgba(209, 201, 183, 0.40),
+    inset -6px -6px 12px rgba(255, 255, 255, 1.00);
+}
+
+.nm-button {
+  transition: all 0.2s ease-in-out;
+  box-shadow:
+     4px  4px 10px rgba(173,  0, 42, 0.20),
+    -2px -2px  6px rgba(255, 255, 255, 0.50);
+  &:active {
+    transform: scale(0.97);
+    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.20);
+  }
+}
+
+.nm-raised-sm {
+  background: #f7f9fd;
+  box-shadow:
+     4px  4px  8px rgba(209, 201, 183, 0.35),
+    -4px -4px  8px rgba(255, 255, 255, 0.90);
+}
+
+.nm-inset {
+  background: #eceef2;
+  box-shadow:
+    inset  3px  3px  6px rgba(209, 201, 183, 0.30),
+    inset -3px -3px  6px rgba(255, 255, 255, 0.70);
+}
+
+// ===== SKILL TREE CANVAS =====
+.skill-tree-canvas {
+  background-image: radial-gradient(circle, #d8dade 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+// ===== SCROLLBAR HIDE =====
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// ===== ROUTE TRANSITIONS =====
+// Applied to the router-outlet wrapper div
+.page-enter {
+  animation: pageEnter 0.2s ease-out forwards;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ===== PROBE LOG STREAM =====
+.probe-log-entry {
+  animation: logEntryIn 0.2s ease-out forwards;
+}
+@keyframes logEntryIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ===== PULSE (real-time feed badge) =====
+.pulse-dot {
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+// ===== SKILL NODE PULSE RING (available nodes) =====
+.pulse-ring {
+  animation: pulseRing 2s ease-out infinite;
+}
+@keyframes pulseRing {
+  0%   { transform: scale(1);    opacity: 0.35; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+// ===== VIEW TRANSITION SLIDE =====
+.page-enter {
+  animation: none;
+  isolation: isolate;
+  transform: translateZ(0);
+  view-transition-name: page-content;
+  will-change: transform, opacity;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(page-content) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.22, 0.72, 0.18, 1);
+  animation-fill-mode: both;
+  isolation: isolate;
+}
+
+::view-transition-old(page-content),
+::view-transition-new(page-content) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.22, 0.72, 0.18, 1);
+  animation-fill-mode: both;
+  backface-visibility: hidden;
+  mix-blend-mode: normal;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+::view-transition-old(page-content) {
+  animation-name: routeSlideForwardOut;
+}
+
+::view-transition-new(page-content) {
+  animation-name: routeSlideForwardIn;
+}
+
+html.route-backward::view-transition-old(page-content) {
+  animation-name: routeSlideBackwardOut;
+}
+
+html.route-backward::view-transition-new(page-content) {
+  animation-name: routeSlideBackwardIn;
+}
+
+@keyframes routeSlideForwardOut {
+  0%   { opacity: 1; transform: translateX(0) scale(1); }
+  46%  { opacity: 0; }
+  100% { opacity: 0; transform: translateX(-14%) scale(0.972); }
+}
+
+@keyframes routeSlideForwardIn {
+  from { opacity: 1; transform: translateX(96%) scale(1); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes routeSlideBackwardOut {
+  0%   { opacity: 1; transform: translateX(0) scale(1); }
+  46%  { opacity: 0; }
+  100% { opacity: 0; transform: translateX(14%) scale(0.972); }
+}
+
+@keyframes routeSlideBackwardIn {
+  from { opacity: 1; transform: translateX(-96%) scale(1); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}

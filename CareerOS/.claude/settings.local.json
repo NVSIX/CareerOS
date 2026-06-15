@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node --version; npm --version; \\(Get-Location\\).Path)",
+      "PowerShell(try { \\(Get-Command vercel -ErrorAction Stop\\).Source } catch { \"vercel CLI not found\" })",
+      "PowerShell(npm create vite@latest careeros-prototype -- --template react)"
+    ]
+  }
+}

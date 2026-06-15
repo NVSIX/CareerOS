@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-base text-txt font-body antialiased;
+}
+
+/* Elevation system — the signature of V2 (DESIGN_SYSTEM_V2 §2). */
+.layer-raised {
+  background: #efece3;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.06), -4px -4px 8px rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.layer-inset {
+  background: #efece3;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.06), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+.layer-pressed {
+  background: #e5e2d8;
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.5);
+}
+
+/* Skill-tree available-node pulse ring (DESIGN_SYSTEM_V2 §8, §U2):
+   2s infinite, ring opacity 0.35→0, r grown via transform scale. */
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+.pulse-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse-ring 2s ease-out infinite;
+}
